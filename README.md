@@ -3,7 +3,7 @@
 
 A comprehensive and declarative Library to use the FileMaker Data API.  This library exposes the FileMaker Data API as Combine Publishers.  This library takes advantage of the use of generics to keep things type safe and provide better debugging.  All basic query and request structs are provided that match the data api.  All you need to provide is your encodable response objects.
 
-[Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square)
+ ![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square)
 ---
 ### Index
 
