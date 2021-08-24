@@ -129,13 +129,13 @@ let myLayout = myServer("www.example.com).addDatabase("databaseName").addLayout(
 The credentials object is stored in the database object.  It is initialized as basic, oAuth or Claris ID.  On successful login it is replaced by a token.  The credentials object is published so if you have a timer or something observing you can act on the change when it flips to invalid.
 
 ```swift
-///Basic Auth
+//Basic Auth
 let credentials = Credentials(user: String, password: String)
 
-///OAuth
+//OAuth
 let credentials = Credentials(oAuthId: String, oAuthIdentifier: String)
 
-///ClarisId
+//ClarisId
 let credentials = Credentials(clarisId: String)
 ```
 #### FMDataSourceAuth
