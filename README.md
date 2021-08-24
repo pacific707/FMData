@@ -142,7 +142,7 @@ let credentials = Credentials(clarisId: String)
 If you are connecting to a database with an external data source that needs separate authentication you can send an array of FMDataSourceAuth
 
 ```swift
-///Basic Auth
+//Basic Auth
 let dataSourceAuth = FMDataSourceAuth(fmDataSource: [
                                         .init(
                                             database: "externalDb",
@@ -152,7 +152,7 @@ let dataSourceAuth = FMDataSourceAuth(fmDataSource: [
                                             )
                                         )
 ])
-///OAuth
+//OAuth
 let dataSourceAuth = FMDataSourceAuth(fmDataSource: [
                                         .init(
                                             database: "externalDb",
