@@ -28,7 +28,7 @@ extension DataAPI.Layout {
     public func createRecord<R: Encodable, P: Encodable>(record: DataAPI.EditRecord<R,P>) -> AnyPublisher<DataAPI.CreateResponse, FMRest.APIError> {
         
         if let database = self.database {
-            let requestWrapper = DataAPI.createAuthRequest(credentials: database.credentials, server: database.server, endpoint: .createRecord(database: database.name, layout: self.name), body: record)
+            let requestWrapper = DataAPI.createRequest(credentials: database.credentials, server: database.server, endpoint: .createRecord(database: database.name, layout: self.name), body: record)
             switch requestWrapper {
             case .success(let request):
                 return FMRest.Agent.run(request)
