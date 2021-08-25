@@ -1,6 +1,5 @@
 import Foundation
 
-
 public protocol DataAPIPortalRecord: Decodable {
     var recordId: String { get }
     var modId: String { get }

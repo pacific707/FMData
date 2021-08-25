@@ -2,7 +2,6 @@ import Foundation
 import Combine
 import FMRest
 
-
 extension DataAPI.Layout {
     
     //MARK: Records

@@ -2,7 +2,6 @@ import Foundation
 import Combine
 import FMRest
 
-
 extension Publisher {
     
     func dataAPIResponse<T>() -> AnyPublisher<T, FMRest.APIError> where Self.Output == FMRest.Response<T>{
