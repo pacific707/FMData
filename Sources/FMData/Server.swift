@@ -1,7 +1,6 @@
-
-
 import Foundation
 import FMRest
+
 
 public enum DataAPI {
     

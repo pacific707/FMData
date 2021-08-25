@@ -1,6 +1,7 @@
 import Foundation
 import FMRest
 
+
 extension DataAPI {
     
     public enum Credentials: FMRestCredentials {
