@@ -2,7 +2,6 @@ import Foundation
 import Combine
 import FMRest
 
-
 extension DataAPI.Server {
     
     public func getProductInfo() -> AnyPublisher<ProductInfo, FMRest.APIError> {

@@ -121,7 +121,7 @@ Again if you are only using one layout you can define all three at once and just
 ```swift
 let myLayout = myServer("www.example.com).addDatabase("databaseName").addLayout(LayoutSet.myLayout)
 ```
--
+
 ## Request Objects
 
 ### Authentication Objects
