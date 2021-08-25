@@ -1,5 +1,6 @@
 import Foundation
 
+
 extension DataAPI {
 
     public struct ScriptResponse: Decodable {

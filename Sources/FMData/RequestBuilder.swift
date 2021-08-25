@@ -1,6 +1,7 @@
 import Foundation
 import FMRest
 
+
 extension DataAPI {
     
     static func createRequest(credentials: Credentials, server: Server?, endpoint: Endpoint) -> Result<URLRequest, FMRest.APIError> {
