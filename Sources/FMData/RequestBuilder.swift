@@ -35,7 +35,27 @@ extension DataAPI {
             return.failure(FMRest.APIError.apiError(message: "database is not connected to a server"))
         }
         
-        let requestWrapper = FMRest.createRequest(credentials: credentials, host: requestServer.host, config: requestServer.config, method: endpoint.method, endpoint: endpoint, data: body)
+        let requestWrapper: Result<URLRequest, FMRest.APIError>
+        if let jsonBody = body {
+            requestWrapper = FMRest.createRequest(
+                credentials: credentials,
+                host: requestServer.host,
+                config: requestServer.config,
+                method: endpoint.method,
+                endpoint: endpoint,
+                data: jsonBody)
+        } else {
+            requestWrapper = .success(
+                FMRest.createRequest(
+                    credentials: credentials,
+                    host: requestServer.host,
+                    config: requestServer.config,
+                    method: endpoint.method,
+                    endpoint: endpoint,
+                    queryParameters: queryParameters)
+            )
+        }
+        
         switch requestWrapper {
         case .success(let request):
             return .success(request)
