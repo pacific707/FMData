@@ -21,6 +21,12 @@ extension DataAPI {
             
         }
         
+        public init(script: ScriptQuery? = nil, layoutResponse: String? = nil, portal: [PortalRequest]? = nil, offset: Int? = nil, limit: Int? = nil, sortOrder: [SortQuery]? = nil) {
+            let sLimit = limit == nil ? nil : "\(limit!)"
+            let sOffset = offset == nil ? nil : "\(offset!)"
+            self.init(script: script, layoutResponse: layoutResponse, portal: portal, offset: sOffset, limit: sLimit, sortOrder: sortOrder)
+        }
+        
         public init(script: ScriptQuery? = nil, layoutResponse: String? = nil, portal: [PortalRequest]? = nil) {
             self.script = script
             self.layoutResponse = layoutResponse
