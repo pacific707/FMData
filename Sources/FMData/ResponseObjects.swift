@@ -75,10 +75,6 @@ extension DataAPI {
             
         }
         
-        public struct EmptyPortal: Decodable {
-            
-        }
-        
     }
     
     public struct CreateResponse: Decodable {

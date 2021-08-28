@@ -58,7 +58,6 @@ extension DataAPI.Layout {
         } else {
             return Fail<DataAPI.RecordResponse<R,P>, FMRest.APIError>(error: FMRest.APIError.apiError(message: "No database associated with layout")).eraseToAnyPublisher()
         }
-        
     }
     
     public func editRecord<R: Encodable, P: Encodable>(record: DataAPI.EditRecord<R,P>, recordId: Int) -> AnyPublisher<DataAPI.EditRecordResponse, FMRest.APIError> {
