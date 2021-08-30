@@ -96,7 +96,7 @@ extension DataAPI {
         public let layoutResponse: String?
         public let portal: [PortalRequest]?
         
-        public init(query: [[String: String]], sort: [SortQuery]?, script: ScriptQuery? = nil, offset: Int?, limit: Int?, layoutResponse: String? = nil, portal: [PortalRequest]? = nil) {
+        public init(query: [[String: String]], sort: [SortQuery]?, script: ScriptQuery? = nil, offset: Int? = nil, limit: Int? = nil, layoutResponse: String? = nil, portal: [PortalRequest]? = nil) {
             self.query = query
             self.sortOrder = sort
             self.script = script
