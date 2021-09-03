@@ -7,7 +7,7 @@ public enum DataAPI {
         
         public let host: String
         public var databases: Set<Database>
-        public let config: FMRestConfig
+        public var config: FMRestConfig
 
         public init(host: String, databases: Set<Database> = [], config: FMRestConfig = Config()) {
             self.host = host
