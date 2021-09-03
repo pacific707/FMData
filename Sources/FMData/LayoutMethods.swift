@@ -63,7 +63,7 @@ extension DataAPI.Layout {
     public func editRecord<R: Encodable, P: Encodable>(record: DataAPI.EditRecord<R,P>, recordId: Int) -> AnyPublisher<DataAPI.EditRecordResponse, FMRest.APIError> {
         
         if let databases = self.database {
-            let requestWrapper = DataAPI.createAuthRequest(credentials: databases.credentials, server: databases.server, endpoint: .editRecord(database: databases.name, layout: self.name, recordId: recordId), body: record)
+            let requestWrapper = DataAPI.createRequest(credentials: databases.credentials, server: databases.server, endpoint: .editRecord(database: databases.name, layout: self.name, recordId: recordId), body: record)
             switch requestWrapper {
             case .success(let request):
                 return FMRest.Agent.run(request)
