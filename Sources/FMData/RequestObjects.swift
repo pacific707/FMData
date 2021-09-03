@@ -167,7 +167,7 @@ extension DataAPI {
             self.layoutResponse = layoutResponse
         }
         
-        public init(editRecord record: R, portalData: [String:P?]? = nil, modId: String? = nil, script: ScriptQuery? = nil, layoutResponse: String? = nil) {
+        public init(editRecord record: R, portalData: [String:P?], modId: String? = nil, script: ScriptQuery? = nil, layoutResponse: String? = nil) {
             self.fieldData = record
             self.portalData = portalData
             self.modId = modId
@@ -177,24 +177,6 @@ extension DataAPI {
         }
         
         public init(editRecord record: R, modId: String? = nil, script: ScriptQuery? = nil, layoutResponse: String? = nil) where P == String? {
-            self.fieldData = record
-            self.portalData = nil
-            self.modId = modId
-            self.script = script
-            self.layoutResponse = layoutResponse
-          
-        }
-        
-        public init(editRecords record: R, portalData: [String:P?]? = nil, modId: String? = nil, script: ScriptQuery? = nil, layoutResponse: String? = nil) {
-            self.fieldData = record
-            self.portalData = portalData
-            self.modId = modId
-            self.script = script
-            self.layoutResponse = layoutResponse
-          
-        }
-        
-        public init(editRecords record: R, modId: String? = nil, script: ScriptQuery? = nil, layoutResponse: String? = nil) where P == String? {
             self.fieldData = record
             self.portalData = nil
             self.modId = modId
