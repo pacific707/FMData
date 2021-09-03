@@ -176,6 +176,33 @@ extension DataAPI {
           
         }
         
+        public init(editRecord record: R, modId: String? = nil, script: ScriptQuery? = nil, layoutResponse: String? = nil) where P == String? {
+            self.fieldData = record
+            self.portalData = nil
+            self.modId = modId
+            self.script = script
+            self.layoutResponse = layoutResponse
+          
+        }
+        
+        public init(editRecords record: R, portalData: [String:P?]? = nil, modId: String? = nil, script: ScriptQuery? = nil, layoutResponse: String? = nil) {
+            self.fieldData = record
+            self.portalData = portalData
+            self.modId = modId
+            self.script = script
+            self.layoutResponse = layoutResponse
+          
+        }
+        
+        public init(editRecords record: R, modId: String? = nil, script: ScriptQuery? = nil, layoutResponse: String? = nil) where P == String? {
+            self.fieldData = record
+            self.portalData = nil
+            self.modId = modId
+            self.script = script
+            self.layoutResponse = layoutResponse
+          
+        }
+        
         public func encode(to encoder: Encoder) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
             try container.encode(fieldData, forKey: .fieldData)
