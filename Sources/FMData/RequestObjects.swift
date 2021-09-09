@@ -159,9 +159,17 @@ extension DataAPI {
 
         }
         
-        public init(createRecord record: R, portalData: [String:P?]? = nil, script: ScriptQuery? = nil, layoutResponse: String? = nil) {
+        public init(createRecord record: R, portalData: [String:P?], script: ScriptQuery? = nil, layoutResponse: String? = nil) {
             self.fieldData = record
             self.portalData = portalData
+            self.modId = nil
+            self.script = script
+            self.layoutResponse = layoutResponse
+        }
+        
+        public init(createRecord record: R, script: ScriptQuery? = nil, layoutResponse: String? = nil) where P == String? {
+            self.fieldData = record
+            self.portalData = nil
             self.modId = nil
             self.script = script
             self.layoutResponse = layoutResponse
