@@ -2,16 +2,18 @@ import Foundation
 
 extension DataAPI {
     
+    public struct DiscardableType: Codable {}
+    
     public struct RecordQuery: QueryParameter {
         
         public let script: ScriptQuery?
         public let layoutResponse: String?
         public let portal: [PortalRequest]?
-        public let offset: String?
-        public let limit: String?
+        public let offset: Int?
+        public let limit: Int?
         public let sortOrder: [SortQuery]?
         
-        public init(script: ScriptQuery? = nil, layoutResponse: String? = nil, portal: [PortalRequest]? = nil, offset: String? = nil, limit: String? = nil, sortOrder: [SortQuery]? = nil) {
+        public init(script: ScriptQuery? = nil, layoutResponse: String? = nil, portal: [PortalRequest]? = nil, offset: Int? = nil, limit: Int? = nil, sortOrder: [SortQuery]? = nil) {
             self.script = script
             self.layoutResponse = layoutResponse
             self.portal = portal
@@ -19,12 +21,6 @@ extension DataAPI {
             self.limit = limit
             self.sortOrder = sortOrder
             
-        }
-        
-        public init(script: ScriptQuery? = nil, layoutResponse: String? = nil, portal: [PortalRequest]? = nil, offset: Int? = nil, limit: Int? = nil, sortOrder: [SortQuery]? = nil) {
-            let sLimit = limit == nil ? nil : "\(limit!)"
-            let sOffset = offset == nil ? nil : "\(offset!)"
-            self.init(script: script, layoutResponse: layoutResponse, portal: portal, offset: sOffset, limit: sLimit, sortOrder: sortOrder)
         }
         
         public init(script: ScriptQuery? = nil, layoutResponse: String? = nil, portal: [PortalRequest]? = nil) {
@@ -66,10 +62,10 @@ extension DataAPI {
                     return params
                 case .offset:
                     guard let qOffset = self.offset else { return nil }
-                    return [URLQueryItem(name: key.rawValue, value: qOffset)]
+                    return [URLQueryItem(name: key.rawValue, value: "\(qOffset)")]
                 case .limit:
                     guard let qLimit = self.limit else { return nil }
-                    return [URLQueryItem(name: key.rawValue, value: qLimit)]
+                    return [URLQueryItem(name: key.rawValue, value: "\(qLimit)")]
                 case .sortOrder:
                     guard let newSort = self.sortOrder else { return nil }
                     let sortString = newSort.map {
@@ -145,7 +141,7 @@ extension DataAPI {
     public struct EditRecord<R: Encodable, P: Encodable>: Encodable {
         
         public let fieldData: R
-        public let portalData: [String: P?]?
+        public let portalData: P?
         public let modId: String?
         public let script: ScriptQuery?
         public let layoutResponse: String?
@@ -159,7 +155,7 @@ extension DataAPI {
 
         }
         
-        public init(createRecord record: R, portalData: [String:P?], script: ScriptQuery? = nil, layoutResponse: String? = nil) {
+        public init(createRecord record: R, portalData: P, script: ScriptQuery? = nil, layoutResponse: String? = nil) {
             self.fieldData = record
             self.portalData = portalData
             self.modId = nil
@@ -167,7 +163,7 @@ extension DataAPI {
             self.layoutResponse = layoutResponse
         }
         
-        public init(createRecord record: R, script: ScriptQuery? = nil, layoutResponse: String? = nil) where P == String? {
+        public init(createRecord record: R, script: ScriptQuery? = nil, layoutResponse: String? = nil) where P == DiscardableType? {
             self.fieldData = record
             self.portalData = nil
             self.modId = nil
@@ -175,19 +171,27 @@ extension DataAPI {
             self.layoutResponse = layoutResponse
         }
         
-        public init(editRecord record: R, portalData: [String:P?], modId: String? = nil, script: ScriptQuery? = nil, layoutResponse: String? = nil) {
+        public init(editRecord record: R, portalData: P, modId: Int? = nil, script: ScriptQuery? = nil, layoutResponse: String? = nil) {
             self.fieldData = record
             self.portalData = portalData
-            self.modId = modId
+            if let modIdInt = modId {
+                self.modId = "\(modIdInt)"
+            } else {
+                self.modId = nil
+            }
             self.script = script
             self.layoutResponse = layoutResponse
           
         }
         
-        public init(editRecord record: R, modId: String? = nil, script: ScriptQuery? = nil, layoutResponse: String? = nil) where P == String? {
+        public init(editRecord record: R, modId: Int? = nil, script: ScriptQuery? = nil, layoutResponse: String? = nil) where P == DiscardableType? {
             self.fieldData = record
             self.portalData = nil
-            self.modId = modId
+            if let modIdInt = modId {
+                self.modId = "\(modIdInt)"
+            } else {
+                self.modId = nil
+            }
             self.script = script
             self.layoutResponse = layoutResponse
           

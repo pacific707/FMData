@@ -29,8 +29,8 @@ extension DataAPI {
         public struct Record<R: Decodable>: Decodable {
             public let fieldData: R
             public let portalData: P?
-            public let modId: String
-            public let recordId: String
+            public let modId: Int
+            public let recordId: Int
             public let portalDataInfo: [PortalDataInfo]?
             
             public enum CodingKeys: String, CodingKey {
@@ -41,6 +41,24 @@ extension DataAPI {
                 case portalDataInfo
             }
             
+            public init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                self.fieldData = try container.decode(R.self, forKey: .fieldData)
+                self.portalData = try container.decodeIfPresent(P.self, forKey: .portalData)
+                self.portalDataInfo = try container.decodeIfPresent([PortalDataInfo].self, forKey: .portalDataInfo)
+                let recordIdString = try container.decode(String.self, forKey: .recordId)
+                let modIdString = try container.decode(String.self, forKey: .modId)
+                guard let recordIdInt = Int(recordIdString) else {
+                    let context = DecodingError.Context(codingPath: container.codingPath + [CodingKeys.recordId], debugDescription: "Error setting recordId to Int")
+                    throw DecodingError.dataCorrupted(context)
+                }
+                guard let modIdInt = Int(modIdString) else {
+                    let context = DecodingError.Context(codingPath: container.codingPath + [CodingKeys.modId], debugDescription: "Error setting modId to Int")
+                    throw DecodingError.dataCorrupted(context)
+                }
+                self.recordId = recordIdInt
+                self.modId = modIdInt
+            }
         }
         
         public enum CodingKeys: String, CodingKey {
@@ -78,8 +96,8 @@ extension DataAPI {
     }
     
     public struct CreateResponse: Decodable {
-        public let recordId: String
-        public let modId: String
+        public let recordId: Int
+        public let modId: Int
         public let scriptResponse: ScriptResponse?
         
         public enum CodingKeys: String, CodingKey {
@@ -89,14 +107,24 @@ extension DataAPI {
         
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.recordId = try container.decode(String.self, forKey: .recordId)
-            self.modId = try container.decode(String.self, forKey: .modId)
+            let recordIdString = try container.decode(String.self, forKey: .recordId)
+            let modIdString = try container.decode(String.self, forKey: .modId)
+            guard let recordIdInt = Int(recordIdString) else {
+                let context = DecodingError.Context(codingPath: container.codingPath + [CodingKeys.recordId], debugDescription: "Error setting recordId to Int")
+                throw DecodingError.dataCorrupted(context)
+            }
+            guard let modIdInt = Int(modIdString) else {
+                let context = DecodingError.Context(codingPath: container.codingPath + [CodingKeys.modId], debugDescription: "Error setting modId to Int")
+                throw DecodingError.dataCorrupted(context)
+            }
+            self.recordId = recordIdInt
+            self.modId = modIdInt
             self.scriptResponse = try ScriptResponse(from: decoder)
         }
     }
     
     public struct EditRecordResponse: Decodable {
-        public let modId: String
+        public let modId: Int
         public let newPortalRecordInfo: CreatedPortalRecordInfo?
         public let scriptResponse: ScriptResponse?
         
@@ -107,13 +135,41 @@ extension DataAPI {
         
         public struct CreatedPortalRecordInfo: Decodable {
             public let tableName: String
-            public let recordId: String
-            public let modId: String
+            public let recordId: Int
+            public let modId: Int
+            
+            enum CodingKeys: CodingKey {
+                case tableName
+                case recordId
+                case modId
+            }
+            
+            public init(from decoder: Decoder) throws {
+                let container = try decoder.container(keyedBy: CodingKeys.self)
+                self.tableName = try container.decode(String.self, forKey: .tableName)
+                let recordIdString = try container.decode(String.self, forKey: .recordId)
+                let modIdString = try container.decode(String.self, forKey: .modId)
+                guard let recordIdInt = Int(recordIdString) else {
+                    let context = DecodingError.Context(codingPath: container.codingPath + [CodingKeys.recordId], debugDescription: "Error setting recordId to Int")
+                    throw DecodingError.dataCorrupted(context)
+                }
+                guard let modIdInt = Int(modIdString) else {
+                    let context = DecodingError.Context(codingPath: container.codingPath + [CodingKeys.modId], debugDescription: "Error setting modId to Int")
+                    throw DecodingError.dataCorrupted(context)
+                }
+                self.recordId = recordIdInt
+                self.modId = modIdInt
+            }
         }
         
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            self.modId = try container.decode(String.self, forKey: .modId)
+            let modIdString = try container.decode(String.self, forKey: .modId)
+            guard let modIdInt = Int(modIdString) else {
+                let context = DecodingError.Context(codingPath: container.codingPath + [CodingKeys.modId], debugDescription: "Error setting modId to Int")
+                throw DecodingError.dataCorrupted(context)
+            }
+            self.modId = modIdInt
             self.newPortalRecordInfo = try container.decodeIfPresent(CreatedPortalRecordInfo.self, forKey: .newPortalRecordInfo)
             self.scriptResponse = try ScriptResponse(from: decoder)
         }
@@ -293,3 +349,5 @@ extension DataAPI.Layout {
     }
    
 }
+
+

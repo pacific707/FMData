@@ -2,7 +2,7 @@ import Foundation
 
 public protocol DataAPIPortalRecord: Decodable {
     var recordId: String { get }
-    var modId: String { get }
+//    var modId: String { get }
 }
 
 public protocol LayoutKey {
@@ -13,4 +13,3 @@ public protocol LayoutKey {
 public protocol QueryParameter {
     var queryParameters: [URLQueryItem] { get }
 }
-
