@@ -45,3 +45,29 @@ extension Publisher {
     }
 }
 
+@available(iOS 15.0, macOS 12.0, tvOS 15.0, watchOS 8.0, *)
+extension Publisher {
+    func awaitSingleResult() async -> Result<Output, FMRest.APIError> {
+        var cancellable: AnyCancellable?
+        var didReceiveValue = false
+        
+        return await withCheckedContinuation { continuation in
+            cancellable = sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .failure(let error):
+                        continuation.resume(returning: .failure(FMRest.APIError.unknown(error: error)))
+                    case .finished:
+                        cancellable?.cancel()
+                    }
+                },
+                receiveValue: { value in
+                    guard !didReceiveValue else { return }
+                    
+                    didReceiveValue = true
+                    continuation.resume(returning: .success(value))
+                }
+            )
+        }
+    }
+}

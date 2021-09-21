@@ -5,6 +5,10 @@ A comprehensive and declarative Library to use the FileMaker Data API.  This lib
 
  ![Swift Package Manager](https://img.shields.io/badge/Swift_Package_Manager-compatible-orange?style=flat-square)
 ---
+# NEW - async/awat
+When using Swift 5.5 you can now convert any publisher to an async call.
+Just follow up your combine pipeline with .awaitSingleResult() to return an async Result<Output, FMRest.APIError>.
+---
 ### Index
 
 - [Features](#Features)
