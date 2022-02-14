@@ -43,8 +43,6 @@ extension DataAPI {
     static func createUploadRequest(credentials: Credentials, server: Server, endpoint: Endpoint, queryParameters: [URLQueryItem], data: FMRest.ContainerFile) throws -> URLRequest {
         
         switch credentials {
-        case .token(_):
-            throw FMRest.APIError.authTypeError(message: "Already authenticated with token")
         case .invalid:
             throw FMRest.APIError.authTypeError(message: "Credentials set to invalid")
         default:
