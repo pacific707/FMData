@@ -32,13 +32,15 @@ extension DataAPI.Server {
         public var scheme: String
         public var rootPath: String
         public var decoder: JSONDecoder
+        public var encoder: JSONEncoder
         public var options: FMRest.ServerOptions
         
-        public init(version: String = "/vLatest", scheme: String = "https", rootPath: String = "/fmi/data", decoder: JSONDecoder = JSONDecoder(), options: FMRest.ServerOptions = FMRest.ServerOptions()) {
+        public init(version: String = "/vLatest", scheme: String = "https", rootPath: String = "/fmi/data", decoder: JSONDecoder = JSONDecoder(), encoder: JSONEncoder = JSONEncoder(), options: FMRest.ServerOptions = FMRest.ServerOptions()) {
             self.version = version
             self.scheme = scheme
             self.rootPath = rootPath
             self.decoder = decoder
+            self.encoder = encoder
             self.options = options
         }
         
