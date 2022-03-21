@@ -216,7 +216,7 @@ extension DataAPI.Database {
         public let scripts: [ScriptItem]
     }
     
-    public enum ScriptItem: Decodable {
+    public enum ScriptItem: Decodable, Identifiable, Hashable {
         
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -228,8 +228,8 @@ extension DataAPI.Database {
             }
         }
         
-        case script(_ name: String)
-        case folder(_ name: String, scripts: [ScriptItem])
+        case script(_ name: String, _ id: UUID = UUID())
+        case folder(_ name: String, scripts: [ScriptItem], _ id: UUID = UUID())
         
         public enum CodingKeys: CodingKey {
             case name
@@ -238,10 +238,19 @@ extension DataAPI.Database {
         
         public var name: String {
             switch self {
-            case .script(let name):
+            case .script(let name, _):
                 return name
-            case .folder(let name, scripts: _):
+            case .folder(let name, scripts: _, _):
                 return name
+            }
+        }
+        
+        public var id: UUID {
+            switch self {
+            case .script(_, let id):
+                return id
+            case .folder(_, scripts: _, let id):
+                return id
             }
         }
         
